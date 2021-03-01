@@ -1,0 +1,52 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "allowJs": false,
+    "allowUnreachableCode": false,
+    "baseUrl": ".",
+    "checkJs": false,
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "jsx": "preserve", 
+    "lib": [
+      "es2017",
+      "esnext.asynciterable",
+      "dom"
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noFallthroughCasesInSwitch": true,
+    "outDir": "bin",
+    "paths": {
+      "src": [
+        "src"
+      ]
+    },
+    "preserveConstEnums": true,
+    "pretty": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "rootDir": "src",
+    "strict": true,
+    "strictNullChecks": false,
+    "sourceMap": true,
+    "target": "es2017",
+    "typeRoots": ["node_modules/@types"]
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+  
