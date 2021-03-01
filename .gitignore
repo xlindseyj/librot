@@ -51,3 +51,4 @@ scripts/**/*
 data/**/*
 debug.log
 bin/**/*
+.env
