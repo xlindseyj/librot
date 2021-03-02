@@ -17,7 +17,7 @@ export default class Server {
   // public commandHandler = new CommandHandler(discordConfig.prefix);
   public baseUrl: string = 'https://cafeastrology.com/libradailyhoroscope.html';
   public postsUpToDate = false;
-  public dateTypesEntries: any[];
+  public dateTypesEntries: any[] = [];
   public channelDateTypes = [
     DateTypeEnum.DAILY,
     DateTypeEnum.MONTHLY,
@@ -49,7 +49,7 @@ export default class Server {
   }
   
   public fetchData = async (url: string): Promise<void | AxiosResponse<any>> => {
-    log("Crawling data from cafeastrology - horoscopes...", true)
+    log("Crawling data from cafeastrology...", true)
     let response: any = await axios(url).catch((error) => log(error));
 
     if (response.status !== 200){
@@ -121,7 +121,10 @@ export default class Server {
     await this.fetchData(this.baseUrl).then(async (res: any) => {
       const html = res.data;
       const $ = cheerio.load(html);
-      await this.getDateTypeEntries($);
+      
+      if (!this.dateTypesEntries.length) {
+        await this.getDateTypeEntries($);
+      }
 
       const channels: Channel[] = [ ...this.discordClient.channels.cache.entries() ]
         .filter(([id, channel]: [string, any]) => channel.type === 'text')
@@ -145,16 +148,19 @@ export default class Server {
           .map(([id, message]: [string, Message]) => message.content
         );
 
+        const today = new Date().toDateString();
+        const dateToCompare = new Date(date).toDateString();
+        // this.compareDates(today, dateToCompare);
         const channelHasMessages = messages.length > 0 ? true : false;
         const filteredMessages = messages.filter((message: string) => !message.includes(date));
   
         if (channelHasMessages && filteredMessages.length === 0) {
           this.postsUpToDate = true;
-          log(`Channel already up to date: ${channelName}`);
+          log(`Channel already up to date: #${channelName}`);
         } else {
           const message: string = await this.createMessage(date, dateType);
           log(`Sending message: #${channelName}\n${message}`);
-          await channel.send(message);
+          await channel.send(message).catch((error: any) => log(error)); // this.discordClient.channel.send?
         }
       });
     });
