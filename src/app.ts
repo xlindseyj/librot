@@ -134,8 +134,8 @@ export default class Server {
       forEach(this.channelDateTypes, async (dateType: string) => {
         // if (dateType === DateTypeEnum.YEARLY) {
         //   await this.getRefreshYearlyChannels();
-        // cannot refresh yearly because lives on a different baseUrl
-        // https://cafeastrology.com/2021-libra-horoscope-overview.html
+        //   cannot refresh yearly because lives on a different baseUrl
+        //   https://cafeastrology.com/2021-libra-horoscope-overview.html
         // }
 
         const date = $(this.getDateTypeHeader(dateType)).text();
